@@ -1,0 +1,21 @@
+.text-toggle {
+  width: 60px;
+  height: 2em;
+  // background: lawngreen;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+
+.text-toggle div {
+  position: absolute;
+  transition: all 0.2s cubic-bezier(0.95, 0.05, 0.795, 0.035); // OK!
+  transition: all 0.2s cubic-bezier(0.77, 0, 0.175, 1); // OK!
+  width: inherit;
+  height: inherit;
+  text-align: center;
+  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
