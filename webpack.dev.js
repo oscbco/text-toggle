@@ -1,8 +1,5 @@
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
-var CleanWebpackPlugin = require('clean-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var merge = require('webpack-merge');
 var webpack = require('webpack');
 var path = require('path');
 
@@ -33,7 +30,7 @@ module.exports = {
             loader: 'babel-loader',
             options: {
               presets: [['@babel/preset-env', {
-                modules: false,
+                modules: false
               }], '@babel/preset-react'],
               plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-async-to-generator', '@babel/plugin-proposal-object-rest-spread', '@babel/plugin-transform-react-jsx-source', 'react-hot-loader/babel']
             }
@@ -96,13 +93,12 @@ module.exports = {
     }
   },
   plugins: [
-    new CleanWebpackPlugin(['public'], { root: path.resolve(__dirname, '..'), verbose: true }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].css',
       chunkFilename: 'css/[id].css'
     }),
     new HtmlWebpackPlugin({
-      title: 'TextToggle',
+      title: '@oscbco/text-toggle',
       template: './index.html'
     }),
     new webpack.HotModuleReplacementPlugin()

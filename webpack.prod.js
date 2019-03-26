@@ -2,23 +2,22 @@ var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlug
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var nodeExternals = require('webpack-node-externals');
-var merge = require('webpack-merge');
 var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
   entry: [
     // 'react-hot-loader/patch',
-    path.join(__dirname, 'source', 'index.js')
+    path.join(__dirname, 'source', 'TextToggle', 'TextToggle.js')
   ],
   output: {
     filename: 'build/index.js',
     chunkFilename: 'build/index.js',
     path: path.resolve(__dirname),
-    publicPath: './'
+    publicPath: './',
+    library: 'TextToggle',
+    // libraryExport: 'default',
+    libraryTarget: 'umd'
   },
   mode: 'production',
   module: {
@@ -29,9 +28,9 @@ module.exports = {
         loader: 'babel-loader',
         options: {
           presets: [['@babel/preset-env', {
-            modules: false
+            modules: 'umd'
           }], '@babel/preset-react'],
-          plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-async-to-generator', '@babel/plugin-proposal-object-rest-spread', '@babel/plugin-transform-react-jsx-source', 'react-hot-loader/babel']
+          plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-async-to-generator', '@babel/plugin-proposal-object-rest-spread', '@babel/plugin-transform-react-jsx-source']
         }
       }, {
         test: /\.(scss|css)$/,
@@ -91,7 +90,10 @@ module.exports = {
     }
   },
   plugins: [
-    new CleanWebpackPlugin(['public'], { root: path.resolve(__dirname, '..'), verbose: true }),
+    new CleanWebpackPlugin({
+      dry: true,
+      cleanOnceBeforeBuildPatterns: ['build']
+    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
@@ -102,12 +104,15 @@ module.exports = {
       filename: 'build/css/[name].css',
       chunkFilename: 'build/css/[id].css'
     }),
-    new HtmlWebpackPlugin({
-      title: 'Fileops',
-      template: 'source/index.html'
-    }),
     new BundleAnalyzerPlugin()
   ],
-  externals: [nodeExternals()],
+  externals: {
+    react: {
+      root: 'React',
+      commonjs2: 'react',
+      commonjs: 'react',
+      amd: 'react'
+    }
+  },
   target: 'web'
 };
