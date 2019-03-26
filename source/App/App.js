@@ -1,23 +1,107 @@
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 
 import TextToggle from '../TextToggle/TextToggle';
-import styles from './_App.scss';
-
+import css from './_App.scss';
+import darkBulb from '../assets/dark-bulb.png';
+import lightBulb from '../assets/light-bulb.png';
+import moon from '../assets/moon.png';
+import sun from '../assets/sun.png';
 export default class App extends PureComponent {
   render () {
     return (
-      <div id={styles.app}>
-        <br />
-        <div style={{display: 'block'}}>
-          <span style={{verticalAlign: 'middle'}}>Which side do you prefer? </span><TextToggle leftOption='LEFT' rightOption='RIGHT' customClass={styles.textToggle} />
+      <div id={css.app}>
+        <h1>TextToggle</h1>
+
+        <div className={css.examples + ' ' + css.dark}>
+          <h2>ON/OFF: </h2>&nbsp;
+          <TextToggle defaultItem='dark'
+            style={{
+              borderRadius: '10px'
+            }}
+            leftItem={{
+              value: 'dark',
+              label: <img src={darkBulb} height='24px' />,
+              style: {
+                background: '#333',
+                padding: '7px'
+              }
+            }}
+
+            rightItem={{
+              value: 'light',
+              label: <img src={lightBulb} height='24px' />,
+              style: {
+                background: '#555'
+              }
+            }} />
         </div>
-        <br />
-        <div style={{display: 'block'}}>
-          <span style={{verticalAlign: 'middle'}}>Which is better? </span><TextToggle leftOption='ONE' rightOption='ZERO' customClass={styles.textToggle} />
+
+        <div className={css.examples + ' ' + css.dark}>
+          <h2>Dark or Light: </h2>&nbsp;
+          <TextToggle defaultItem='dark'
+            leftItem={{
+              value: 'dark',
+              label: 'DARK'
+            }}
+            rightItem={{
+              value: 'light',
+              label: 'LIGHT'
+            }} />
         </div>
-        <br />
-        <div style={{display: 'block'}}>
-          <span style={{verticalAlign: 'middle'}}>Show?&nbsp; </span><TextToggle leftOption='ALWAYS' rightOption='NEVER' customClass={styles.textToggle} />
+
+        <div className={css.examples + ' ' + css.dark}>
+          <h2>Night or Day: </h2>&nbsp;
+          <TextToggle defaultItem='sun'
+            style={{
+              borderRadius: '50%'
+            }}
+            leftItem={{
+              value: 'moon',
+              label: <img src={moon} height='24px' />,
+              style: {
+                borderRadius: '50%',
+                padding: '3px',
+                boxShadow: 'inset 0 0 15px rgba(0,0,0,0.99)'
+              }
+            }}
+            rightItem={{
+              value: 'sun',
+              label: <img src={sun} height='30px' />,
+              style: {
+                borderRadius: '50%'
+              }
+            }} />
+        </div>
+
+        <div className={css.examples + ' ' + css.light}>
+          <h2>online/offline: </h2>&nbsp;
+          <TextToggle defaultItem='offline'
+            style={{
+              boxShadow: 'none',
+              border: '2px solid lightgray',
+              outline: '1px solid gray'
+
+            }}
+            leftItem={{
+              value: 'online',
+              label: 'ONLINE',
+              style: {
+                background: 'white',
+                color: 'blue',
+                fontWeight: 'bolder',
+                padding: '7px'
+              }
+            }}
+
+            rightItem={{
+              value: 'offline',
+              label: 'OFFLINE',
+              style: {
+                background: 'white',
+                fontWeight: 'bolder',
+                color: 'tomato'
+              }
+            }} />
         </div>
       </div>
     );
