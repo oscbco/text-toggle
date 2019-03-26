@@ -1,15 +1,24 @@
 import React from 'react';
-import { shallow, mount, render } from 'enzyme';
+import { render, cleanup } from 'react-testing-library';
+import 'jest-dom/extend-expect';
 
 import TextToggle from './TextToggle';
 
-describe('<MyComponent />', () => {
-  it('renders 1 <TextToggle /> components', () => {
-    const wrapper = shallow(<TextToggle />);
-    expect(wrapper.length).toEqual(1);
-  });
-  it('renders 1 <TextToggle /> components', () => {
-    const wrapper = shallow(<TextToggle />);
-    expect(wrapper.text()).toEqual('TextToggle');
+afterEach(cleanup);
+
+describe('inline-select', () => {
+  it('shows correct item', () => {
+    const { queryAllByText } = render(
+      <TextToggle defaultItem='dark'
+        leftItem={{
+          value: 'dark',
+          label: 'DARK'
+        }}
+        rightItem={{
+          value: 'light',
+          label: 'LIGHT'
+        }} />
+    );
+    expect(queryAllByText('DARK').length).toBe(2);
   });
 });

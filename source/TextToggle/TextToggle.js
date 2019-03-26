@@ -1,48 +1,33 @@
-import React, {PureComponent} from 'react';
-import styles from './_TextToggle.scss';
+import React, { useState } from 'react';
+import css from './_TextToggle.scss';
 
-export default class TextToggle extends PureComponent {
-  constructor (props) {
-    super(props);
-    this.state = {
-      selectedSide: -1
-    }
-  }
-
-  handleClick = (side) => {
-    this.setState((prevState) => ({
-      selectedSide: prevState.selectedSide * -1
-    }));
+export default function TextToggle (props) {
+  const [side, setSide] = useState((props.defaultItem === props.rightItem.value) || false);
+  const handleClick = () => {
+    setSide(prevSide => {
+      props.onClick(!prevSide ? props.rightItem.value : props.leftItem.value);
+      return !prevSide;
+    });
+  };
+  const getItemLabel = (item) => {
+    return item.label || item.value;
   };
 
-  render () {
-    const {leftOption, rightOption, handleClick, customClass} = this.props;
-    let style={};
-    if (this.state.selectedSide === -1) {
-      style = {
-        leftStyle: {
-          left: 0
-        },
-        rightStyle: {
-          left: '100%'
-        }
-      }
-    } else {
-      style = {
-        leftStyle: {
-          left: '-100%'
-        },
-        rightStyle: {
-          left: '0'
-        }
-      }
-    }
-
-    return (
-      <div className={styles.textToggle + ' ' + customClass} onClick={this.handleClick}>
-        <div className={styles.leftOption} style={style.leftStyle}>{leftOption}</div>
-        <div className={styles.rightOption} style={style.rightStyle}>{rightOption}</div>
+  return (
+    <div className={css.textToggle} style={{ ...props.style }} onClick={(handleClick)}>
+      <div className={css.toggle + ' ' + css.leftToggle} style={{ left: (side ? '-100%' : '0%'), ...props.leftItem.style }}>{ getItemLabel(props.leftItem) }</div>
+      <div className={css.toggle + ' ' + css.rightToggle} style={{ left: (side ? '0%' : '100%'), ...props.rightItem.style }}>{ getItemLabel(props.rightItem) }</div>
+      <div className={css.toggleGroup}>
+        <div className={css.extra} style={{ ...props.leftItem.style }}>{ getItemLabel(props.leftItem) }</div>
+        <div className={css.extra} style={{ ...props.rightItem.style }}>{ getItemLabel(props.rightItem) }</div>
       </div>
-    );
-  }
+    </div>
+  );
 }
+
+TextToggle.defaultProps = {
+  defaultItem: false,
+  rightItem: {},
+  leftItem: {},
+  onClick: () => {}
+};
