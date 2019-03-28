@@ -103,6 +103,19 @@ export default class App extends PureComponent {
               }
             }} />
         </div>
+
+        <div className={css.examples + ' ' + css.light}>
+          <h2>Left or Right: </h2>&nbsp;
+          <TextToggle defaultItem='left'
+            leftItem={{
+              value: 'left',
+              label: 'LEFT'
+            }}
+            rightItem={{
+              value: 'right',
+              label: 'RIGHT'
+            }} />
+        </div>
       </div>
     );
   }
