@@ -7,6 +7,10 @@ import lightBulb from '../assets/light-bulb.png';
 import moon from '../assets/moon.png';
 import sun from '../assets/sun.png';
 export default class App extends PureComponent {
+  onChange (value) {
+    console.log(value);
+  }
+
   render () {
     return (
       <div id={css.app}>
@@ -33,7 +37,10 @@ export default class App extends PureComponent {
               style: {
                 background: '#555'
               }
-            }} />
+            }}
+
+            onChange={this.onChange}
+            />
         </div>
 
         <div className={css.examples + ' ' + css.dark}>

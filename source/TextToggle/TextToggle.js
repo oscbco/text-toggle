@@ -5,7 +5,7 @@ export default function TextToggle (props) {
   const [side, setSide] = useState((props.defaultItem === props.rightItem.value) || false);
   const handleClick = () => {
     setSide(prevSide => {
-      props.onClick(!prevSide ? props.rightItem.value : props.leftItem.value);
+      props.onChange(!prevSide ? props.rightItem.value : props.leftItem.value);
       return !prevSide;
     });
   };
@@ -29,5 +29,5 @@ TextToggle.defaultProps = {
   defaultItem: false,
   rightItem: {},
   leftItem: {},
-  onClick: () => {}
+  onChange: () => {}
 };
